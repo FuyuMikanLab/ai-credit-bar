@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          swift --version
+          xcodebuild -version
+
+      - name: Package .app
+        run: ./scripts/build-app.sh
+
+      - name: Selftest packaged app
+        run: ./build/AICreditBar.app/Contents/MacOS/AICreditBar --selftest
+
+      - name: Resolve artifact path
+        id: artifact
+        run: |
+          IDENTITY="Sources/AICreditBar/App/AppIdentity.swift"
+          version="$(sed -n 's/^[[:space:]]*static let version = "\([^"]*\)".*/\1/p' "$IDENTITY" | head -n 1)"
+          zip="$(ls -1 build/AICreditBar-*-macos-*.zip | head -n 1)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "zip=$zip" >> "$GITHUB_OUTPUT"
+          echo "zip_name=$(basename "$zip")" >> "$GITHUB_OUTPUT"
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            tag="${GITHUB_REF_NAME}"
+            tag_version="${tag#v}"
+            if [[ "$tag_version" != "$version" ]]; then
+              echo "标签 $tag 与 AppIdentity.version $version 不一致" >&2
+              exit 1
+            fi
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifact.outputs.zip_name }}
+          path: ${{ steps.artifact.outputs.zip }}
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NOTES: |
+            最低 macOS 14，Apple Silicon（arm64）。
+
+            当前为 ad-hoc 签名：下载解压后若提示「无法打开」，请右键 App → 打开。
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          zip="${{ steps.artifact.outputs.zip }}"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release upload "$tag" "$zip" --clobber
+          else
+            gh release create "$tag" "$zip" --title "AICreditBar ${{ steps.artifact.outputs.version }}" --notes "$NOTES"
+          fi

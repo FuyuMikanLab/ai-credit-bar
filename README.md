@@ -57,7 +57,7 @@
 ```bash
 swift build
 swift run AICreditBar --selftest   # 离线自测，不发网络请求
-./scripts/build-app.sh             # 产物：build/AICreditBar.app
+./scripts/build-app.sh             # 产物：build/AICreditBar.app 与 zip
 open build/AICreditBar.app
 ```
 

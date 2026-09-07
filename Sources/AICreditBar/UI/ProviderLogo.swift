@@ -89,17 +89,24 @@ enum ProviderLogo {
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
         NSGraphicsContext.current?.imageInterpolation = .high
-        if let content, let ctx = NSGraphicsContext.current?.cgContext {
-            let fitted = aspectFit(
-                NSSize(width: content.width, height: content.height),
-                in: NSSize(width: point, height: point)
+        // 位图上下文原点在左下。CGContext.draw + 手动 Y 翻转会把 SVG（尤其是 DeepSeek）画颠倒；
+        // 交给 NSImage.draw(respectFlipped:) 对齐 AppKit 坐标系。
+        if let content {
+            let cropped = NSImage(
+                cgImage: content,
+                size: NSSize(width: content.width, height: content.height)
             )
-            ctx.saveGState()
-            ctx.interpolationQuality = .high
-            ctx.translateBy(x: 0, y: point)
-            ctx.scaleBy(x: 1, y: -1)
-            ctx.draw(content, in: fitted)
-            ctx.restoreGState()
+            cropped.draw(
+                in: aspectFit(
+                    NSSize(width: content.width, height: content.height),
+                    in: NSSize(width: point, height: point)
+                ),
+                from: .zero,
+                operation: .sourceOver,
+                fraction: 1,
+                respectFlipped: true,
+                hints: [.interpolation: NSImageInterpolation.high]
+            )
         } else {
             source.draw(
                 in: NSRect(origin: .zero, size: NSSize(width: point, height: point)),
