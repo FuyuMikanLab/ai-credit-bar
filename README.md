@@ -1,4 +1,4 @@
-<div style="display: flex;gap: 20px;align-items: center">
+<div style="display: flex;gap: 20px;align-items: center;justify-content: center">
   <img width="360" src="https://github.com/user-attachments/assets/37fec583-9bf1-4714-90fb-e4d346fa5783" alt="fuyumikanlab-icon" />
   <img width="60" alt="AppIcon" src="https://github.com/user-attachments/assets/334ae389-e6b2-46a3-8010-a4a8614ed75e" />
 </div>
@@ -75,7 +75,6 @@ open build/AICreditBar.app
 
 - 非常有趣的、上班必备的插件：钱条 [Lakr233/MoneyProgress](https://github.com/Lakr233/MoneyProgress)
 - 烧钱很快的[deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)，这是一切都起因。
--
 
 ## 其他
 
