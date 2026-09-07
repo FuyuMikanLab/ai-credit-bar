@@ -2,6 +2,15 @@
   <img src="https://github.com/user-attachments/assets/37fec583-9bf1-4714-90fb-e4d346fa5783" alt="fuyumikanlab-icon" />
 </div>
 
+
+✧ 
+
+<img width="100" height="100" alt="AppIcon" src="https://github.com/user-attachments/assets/334ae389-e6b2-46a3-8010-a4a8614ed75e" />
+
+
+✧ 
+
+
 # AICreditBar
 
 ✧ 余额 / Balance Bar for AI API
@@ -21,7 +30,7 @@
 - SiliconFlow
 - OpenAI
 
-<img alt="screenshot" src="https://github.com/user-attachments/assets/5d798b98-ddda-4fc7-b582-df4d21472014" />
+<img alt="screenshot 011" src="https://github.com/user-attachments/assets/9f658ef2-05bc-450c-a321-ee8df78358fe" />
 
 ## 使用说明
 
@@ -75,6 +84,7 @@ open build/AICreditBar.app
 
 - 非常有趣的、上班必备的插件：钱条 [Lakr233/MoneyProgress](https://github.com/Lakr233/MoneyProgress)
 - 烧钱很快的[deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)，这是一切都起因。
+- 
 
 ## 其他
 
