@@ -57,8 +57,8 @@ enum ProviderLogo {
     }
 
     private static func url(name: String, ext: String) -> URL? {
-        Bundle.module.url(forResource: name, withExtension: ext, subdirectory: directory)
-            ?? Bundle.module.url(forResource: name, withExtension: ext)
+        AppResources.bundle.url(forResource: name, withExtension: ext, subdirectory: directory)
+            ?? AppResources.bundle.url(forResource: name, withExtension: ext)
     }
 
     // MARK: - 菜单栏光栅化

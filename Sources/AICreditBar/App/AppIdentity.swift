@@ -6,7 +6,7 @@
 /// - `version`：唯一版本号。Info.plist 不能引用 Swift 变量，由 `scripts/build-app.sh` 写入 .app
 enum AppIdentity {
     static let name = "AICreditBar"
-    static let version = "0.1.1"
+    static let version = "0.1.2"
 
     /// 稳定短标识。不要从 `name` 推导。
     static let id = "aicreditbar"

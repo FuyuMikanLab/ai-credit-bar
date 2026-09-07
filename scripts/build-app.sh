@@ -54,7 +54,7 @@ else
   /usr/libexec/PlistBuddy -c "Add :CFBundleShortVersionString string $APP_VERSION" "$APP/Contents/Info.plist"
 fi
 
-# SwiftPM 资源包（厂商 Logo 等），必须放进 .app 才能被 Bundle.module 找到
+# SwiftPM 资源包放到 Contents/Resources，由 AppResources 读取（不要用 Bundle.module）
 BIN_DIR="$(dirname "$BIN")"
 shopt -s nullglob
 for bundle in "$BIN_DIR"/*.bundle; do

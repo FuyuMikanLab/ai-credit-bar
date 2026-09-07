@@ -85,9 +85,10 @@ enum L10n {
 
     /// 依次在 SPM 资源 bundle（swift run）与 .app 的 Resources（脚本打包）里找语言包。
     private static func localeFileURL(_ code: String) -> URL? {
+        let bundle = AppResources.bundle
         let candidates: [URL] = [
-            Bundle.module.url(forResource: code, withExtension: "json", subdirectory: "Locales"),
-            Bundle.module.url(forResource: code, withExtension: "json", subdirectory: "Resources/Locales"),
+            bundle.url(forResource: code, withExtension: "json", subdirectory: "Locales"),
+            bundle.url(forResource: code, withExtension: "json", subdirectory: "Resources/Locales"),
             Bundle.main.url(forResource: code, withExtension: "json", subdirectory: "Locales"),
             Bundle.main.resourceURL.map { $0.appendingPathComponent("Locales/\(code).json") },
         ].compactMap { $0 }
